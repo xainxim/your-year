@@ -2,16 +2,31 @@ import { createRouter, createWebHistory } from "vue-router";
 import MainView from "../components/MainView.vue";
 
 const routes = [
-{
-path: "/",
-name: "main",
-component: MainView,  
-},
-{
-path: "/setView",
-name: "setView",
-component: () => import("../components/SetView.vue"),
-},
+    {
+        path: "/",
+        name: "main",
+        component: MainView,
+    },
+    {
+        path: "/header/:nickname",
+        name: "header",
+        component: () => import("../components/HeaderView.vue"),
+    },
+    {
+        path: "/setView",
+        name: "setView",
+        component: () => import("../components/SetView.vue"),
+    },
+    {
+        path: "/home",
+        name: "home",
+        component: () => import("../components/HomeView.vue"),
+    },
+    {
+        path: "/diary",
+        name: "diary",
+        component: () => import("../components/DiaryView.vue"),
+    }
 ];
 
 const router = createRouter({
