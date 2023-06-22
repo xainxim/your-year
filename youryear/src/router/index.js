@@ -8,7 +8,7 @@ const routes = [
         component: MainView,
     },
     {
-        path: "/header/:nickname",
+        path: "/header",
         name: "header",
         component: () => import("../components/HeaderView.vue"),
     },
@@ -18,7 +18,7 @@ const routes = [
         component: () => import("../components/SetView.vue"),
     },
     {
-        path: "/home",
+        path: "/home/:nickname",
         name: "home",
         component: () => import("../components/HomeView.vue"),
     },

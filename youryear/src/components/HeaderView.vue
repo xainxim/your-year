@@ -1,10 +1,10 @@
 <template>
     <div class="header">
-        <h3> {{ nickname }} </h3>
+        <h1>YourYear</h1>
         <ul class="menu">
-            <li class="list"><router-link to="/home">home</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            <li class="list">calendar</li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            <li class="list"><router-link to="/diary">your diary</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            <li class="list"><router-link to="/home/:nickname">home</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;
+            <li class="list">calendar</li>&emsp;&emsp;&emsp;&emsp;&emsp;
+            <li class="list"><router-link to="/diary">your diary</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;
             <li class="list">bucket list</li>
         </ul>
       </div>
@@ -14,16 +14,22 @@
 export default{
     data(){
         return{
-            nickname : ''
+            // nickname : ''
         };
     },
+    props:{
+        nickname: String
+    },
     methods: {
-        selectName(){
-            this.axios.get("api/web/"+this.nickname).then((res) => {
-                console.log(res.data);
-                this.nickname = res.data.nickname;
-            })
-        }
+        // selectName(){
+        //     this.axios.get("/api/web/"+this.nickname).then((res) => {
+        //         console.log(res.data);
+        //         this.nickname = res.data.nickname;
+        //     })
+        // }
+    },
+    created(){
+        // this.selectName();
     }
 }
 </script>
@@ -36,22 +42,25 @@ export default{
     box-sizing: border-box;
     color: #333;
 }
+h1{
+    font-size: 6em;
+    margin-top: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: palevioletred;
+}
 .header{
     width: 1300px;
     margin: 0 auto;
 }
 
 .menu {
+    font-size: 2em;
     list-style: none;
     padding: 0;
-    margin-left: 26%;
-    margin-top: 40px;
+    margin-left: 15%;
+    margin-top: 30px;
 }
-h3{
-    margin-left: 45%;
-    margin-top: 100px;
-}
-
 .list {
     margin-right: 10px;
     display: inline;
