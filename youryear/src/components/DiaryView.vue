@@ -12,6 +12,10 @@
         </div>
       </div>
     </section>
+
+    <div class="writeBtn">
+      <img src="../assets/images/write.png" alt="">
+    </div>
   </div>
 </template>
 
@@ -44,6 +48,9 @@ export default {
         console.log('length :: ' + this.DiaryList.length);
         console.log(this.DiaryList);
       });
+    },
+    getDiaryDetail(idx){
+      this.$router.push('/detail/'+idx);
     }
   },
   created() {
@@ -65,19 +72,31 @@ h2 {
   font-weight: bold;
   font-size: 2.5em;
 }
-
+section{
+  width: 100%;
+  height: 400px;
+}
 .diary-box >div {
   width: 1000px;
-  height: 100px;
+  height: 70px;
   border-bottom : 1px solid palevioletred;
   margin: 0 auto;
   display: flex;
   justify-content: space-around;
+  margin-top: 5px;
 }
 .diary-box > div > div{
 color: #333;
   line-height: 100px;
-  font-size: 1.5em;
+  font-size: 1.9em;
+}
+.writeBtn > img{
+  width:50px;
+  height: 45px;
+  border: 1px solid #333;
+  border-radius: 100px;
+  float: right;
+  margin-right: 145px;
 }
 
 </style>
