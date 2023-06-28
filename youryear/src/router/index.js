@@ -26,6 +26,16 @@ const routes = [
         path: "/diary",
         name: "diary",
         component: () => import("../components/DiaryView.vue"),
+    },
+    {
+        path: "/detail/:idx",
+        name: "detail",
+        component: () => import("../components/DiaryDetail.vue"),
+    },
+    {
+        path: "/write",
+        name: "write",
+        component: () => import("../components/DiaryWrite.vue"),
     }
 ];
 

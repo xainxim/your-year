@@ -5,17 +5,25 @@
 
     <section>
       <div class="diary-box">
-        <div v-for="item in DiaryList" :key="item">
+        <div v-for="item in paginatedData" :key="item">
           <!-- <div class="idx">{{ item.idx }}</div> -->
-          <div class="title">{{ item.title }}</div>
+          <div class="title" v-on:click="getDiaryDetail(item.idx)" style="cursor:pointer">{{ item.title }}</div>
           <div class="date">{{ item.createdDatetime }}</div>
         </div>
       </div>
     </section>
-
-    <div class="writeBtn">
+    <router-link to="/write"><div class="writeBtn">
       <img src="../assets/images/write.png" alt="">
-    </div>
+    </div></router-link>
+      <div class="btn-cover">
+        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+          이전
+        </button> 
+        &emsp;<span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>&emsp;
+        <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">
+          다음
+        </button>
+      </div>
   </div>
 </template>
 
@@ -24,7 +32,12 @@ import HeaderView from './HeaderView.vue';
 export default {
   name: 'HomeView',
   props: {
-    msg: String
+    msg: String,
+    pageSize : {
+      type : Number,
+      required : false,
+      default : 5
+    }
   },
   components: {
     HeaderView
@@ -32,6 +45,7 @@ export default {
   el: '.diary-box',
   data() {
     return {
+      pageNum : 0,
       DiaryList: [
         { idx: '' },
         { title: '' },
@@ -41,12 +55,20 @@ export default {
     };
   },
   methods: {
+    nextPage(){
+      this.pageNum += 1;
+    },
+    prevPage(){
+      this.pageNum -= 1;
+    },
+
+
+
     selectDiaryList() {
       this.axios.get("/api/web").then((res) => {
         this.DiaryList = res.data;
         this.DiaryLength = this.DiaryList.length;
-        console.log('length :: ' + this.DiaryList.length);
-        console.log(this.DiaryList);
+        console.log('date time::::'+this.createdDatetime);
       });
     },
     getDiaryDetail(idx){
@@ -55,12 +77,32 @@ export default {
   },
   created() {
     this.selectDiaryList();
+  },
+  computed: {
+    pageCount(){
+      let listLeng = this.DiaryLength,
+          listSize = this.pageSize,
+          page = Math.floor((listLeng - 1) / listSize) + 1;
+          return page;
+    },
+    paginatedData(){
+      const start = this.pageNum * this.pageSize,
+            end = start + this.pageSize;
+      return this.DiaryList.slice(start, end);
+    }
   }
 }
 </script>
 
 
 <style scoped>
+*{
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 .diaryView {
   width: 1300px;
   margin: 0 auto;
@@ -79,7 +121,7 @@ section{
 .diary-box >div {
   width: 1000px;
   height: 70px;
-  border-bottom : 1px solid palevioletred;
+  border-bottom : 1px dotted #333;
   margin: 0 auto;
   display: flex;
   justify-content: space-around;
@@ -97,6 +139,16 @@ color: #333;
   border-radius: 100px;
   float: right;
   margin-right: 145px;
+  cursor: pointer;
+}
+.btn-cover{
+  width: 250px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+.page-btn{
+  width: 70px;
+  text-align: center;
 }
 
 </style>
