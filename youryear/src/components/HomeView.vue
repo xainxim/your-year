@@ -10,22 +10,49 @@
         <div id="weatherIcon"></div>
         <div class="temp">{{ temp }}℃</div>
         <div class="location">{{ location }}
-          <div class="weather">{{ weather }}</div>
-          
+          <div class="weather">{{ weatherText }}</div>
         </div>
       </div>
     </div>
     <div class="saying">
       <p>Today's saying</p>
-      {{ saying }}
+      {{ saying }}saying
     </div>
-    
+    <div class="contents">
+      <div class="todo">
+        <img src="../assets/images/todo.jpeg" alt="">
+        <h1>Today's List</h1>
+        <ul>
+          <li v-for="data in state.todoData" :key="data">
+            <input type="text" :value="data">
+          </li>
+          <button @click="add()" class="todoBtn">+</button>
+        </ul>
+        
+      </div>
+      <div class="memo">
+        <img src="../assets/images/memo.png" alt="">
+        <h1>memoooo</h1>
+        <textarea class="memoText"></textarea>
+    </div>
+    </div>
   </div>
 </template>
 
 <script>
 import HeaderView from './HeaderView.vue';
+import { reactive  } from 'vue';
 export default {
+  setup(){
+    const state = reactive({
+        todoData: ['data1','data2','data3'],
+      });
+
+      const add = () => {
+        state.todoData.push("추가 data");
+      }
+      return { state, add };
+  },
   name: 'HomeView',
   props: {
     msg: String
@@ -59,9 +86,12 @@ export default {
         this.temp = (result.main.temp - 273.15).toFixed(1) // 기온
         this.iconCode = result.weather[0].icon.toString()
 
-        // if(this.weather == "Clouds"){
-        //   this.weatherText= '구름'
-        // }
+        if(this.weather == "Clouds") this.weatherText= '구름'
+        if(this.weather == "Rain") this.weatherText= "비"
+        if(this.weather == "Mist") this.weatherText= "안개"
+        if(this.weather == "Snow") this.weatherText= "눈"
+        if(this.weather == 'Thunderstorm') this.weatherText= "천둥"
+
         const weatherTmp = document.createElement("img")  // 날씨 이미지
         weatherTmp.src = require(`../assets/images/${this.iconCode}.png`)
         document.getElementById("weatherIcon").appendChild(weatherTmp)
@@ -69,10 +99,13 @@ export default {
   },
   methods: {
     getSaying() {
-      this.axios.get("http://api.adviceslip.com/advice").then((res) => {
+      this.axios.get("https://api.adviceslip.com/advice").then((res) => {
         this.saying = res.data.slip.advice;
         console.log(this.saying);
       })
+    },
+    todo(){
+
     }
   },
   created() {
@@ -90,11 +123,12 @@ export default {
   color: #333;
 }
 .homeView {
-  width: 1300px;
+  width: 1700px;
   margin: 0 auto;
 }
 .weather-box {
   margin-top: 50px;
+  margin-left: 14%;
 }
 .location {
   width: 100px;
@@ -130,7 +164,7 @@ export default {
   font-weight: 700;
 }
 .saying{
-  margin-left: 60%;
+  margin-left: 55%;
   margin-top: -125px;
   font-size: 2em;
 }
@@ -139,5 +173,66 @@ export default {
   font-size: 1.2em;
   border-bottom: 1px solid palevioletred;
   width:200px;
+}
+.contents{
+  width:1300px;
+  margin: 0 auto;
+  margin-top: 30px;
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+}
+.memo, .memo>img{
+  width: 520px;
+  height: 500px;
+}
+.memo h1{
+  position: absolute;
+  top: 100px;
+  left: 70%;
+  font-size: 3em;
+}
+.memoText{
+  position: absolute;
+  display: block;
+  resize: none;
+  top: 155px;
+  left: 59%;
+  width:390px;
+  height: 290px;
+  font-size: 2em;
+  border: 0;
+}
+.todo, .todo>img{
+  margin-top: 20px;
+  width: 550px;
+  height: 450px;
+  position: relative;
+}
+.todo h1{
+  position: absolute;
+  top: 80px;
+  left: 35%;
+  font-weight: bold;
+}
+.todo ul{
+  position: absolute;
+  top: 125px;
+  left: 40px;
+  font-size: 2em;
+}
+.todo ul li{
+  border-bottom: 1px solid #333;
+  width: 400px;
+}
+.todo input{
+  width: 350px;
+  border: 0;
+}
+.todoBtn{
+  margin-top: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
 }
 </style>

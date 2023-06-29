@@ -118,7 +118,7 @@ h2 {
 }
 section{
   width: 100%;
-  height: 400px;
+  height: 500px;
 }
 .diary-box >div {
   width: 1000px;

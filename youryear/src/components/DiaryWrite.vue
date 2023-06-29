@@ -7,7 +7,7 @@
             <input type="text" class="title" placeholder="제목을 입력해주세요" v-model="title">
             <div class="icons">
               <p>오늘 기분은</p>
-              <img src="../assets/images/happy.png" alt="" @click="clickImg">
+              <img src="../assets/images/happy.png" alt="" @click="clickImg" class="imgIcon">
               <img src="../assets/images/sad.png" alt="">
               <img src="../assets/images/angry.png" alt="">
               <img src="../assets/images/love.png" alt="">
@@ -55,7 +55,7 @@ export default {
       })
     },
     clickImg(){
-
+      
     }
   }
 }
@@ -68,7 +68,7 @@ export default {
 }
 section{
   width: 100%;
-  height: 400px;
+  height: 500px;
 }
 h2{
   text-align: center;
@@ -89,9 +89,6 @@ h2{
   border: 0;
   font-size: 2em;
 }
-.contents-box{
-  vertical-align: middle;
-}
 .contents{
   text-align: center;
   font-size: 2em;
@@ -103,14 +100,14 @@ h2{
 }
 .contents::placeholder{
   text-align: center;
-  line-height: 290px;
+  line-height: 380px;
   font-size: 0.8em;
 }
 
 .contents-box > .contents{
   margin: 0 auto;
   width: 1000px;
-  height: 300px;
+  height: 400px;
   display: block;
   resize: none;
 }

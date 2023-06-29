@@ -5,7 +5,7 @@
             <li class="list"><router-link to="/home">home</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;
             <li class="list">calendar</li>&emsp;&emsp;&emsp;&emsp;&emsp;
             <li class="list"><router-link to="/diary">your diary</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;
-            <li class="list">bucket list</li>
+            <li class="list"><router-link to="/bucket">bucket list</router-link></li>
         </ul>
       </div>
 </template>
@@ -59,7 +59,7 @@ h1{
     font-size: 2em;
     list-style: none;
     padding: 0;
-    margin-left: 15%;
+    margin-left: 17%;
 }
 .list {
     margin-right: 10px;

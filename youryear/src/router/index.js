@@ -36,6 +36,11 @@ const routes = [
         path: "/write",
         name: "write",
         component: () => import("../components/DiaryWrite.vue"),
+    },
+    {
+        path: "/bucket",
+        name: "bucket",
+        component: () => import("../components/BucketList.vue"),
     }
 ];
 
