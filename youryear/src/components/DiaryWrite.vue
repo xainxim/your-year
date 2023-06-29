@@ -1,13 +1,13 @@
 <template>
     <HeaderView></HeaderView>
     <div class="write">
-        <h1>오늘 하루는 어땠나요 ?</h1>
+        <h2>오늘 하루는 어땠나요 ?</h2>
         <section>
           <div class="title-box">
             <input type="text" class="title" placeholder="제목을 입력해주세요" v-model="title">
             <div class="icons">
               <p>오늘 기분은</p>
-              <img src="../assets/images/happy.png" alt="">
+              <img src="../assets/images/happy.png" alt="" @click="clickImg">
               <img src="../assets/images/sad.png" alt="">
               <img src="../assets/images/angry.png" alt="">
               <img src="../assets/images/love.png" alt="">
@@ -18,7 +18,7 @@
             <textarea name="contents" class="contents" placeholder="입력해주세요 !" v-model="contents"></textarea>
           </div>
         </section>
-        <button v-on:click="saveDATA()">등록하기</button>
+        <button v-on:click="saveDATA()" class="Btn">등록하기</button>
     </div>
 </template>
 
@@ -44,7 +44,7 @@ export default {
         alert('제목과 내용을 입력해주세요');
         return;
       }
-      this.axios.post("/api.web/diaryInsert",{
+      this.axios.post("/api/web/diaryInsert",{
         title : this.title,
         contents : this.contents
       }).then((res) => {
@@ -53,6 +53,9 @@ export default {
           this.$router.push('/diary');
         }
       })
+    },
+    clickImg(){
+
     }
   }
 }
@@ -67,9 +70,10 @@ section{
   width: 100%;
   height: 400px;
 }
-h1{
+h2{
   text-align: center;
-  margin-top: 40px;
+  margin-top: 70px;
+  font-weight: bold;
 }
 .title-box{
   display: flex;
@@ -79,17 +83,28 @@ h1{
   margin-top: 20px;
 }
 .title{
+  text-align: center;
   width: 500px;
   height: 60px;
   border: 0;
+  font-size: 2em;
+}
+.contents-box{
+  vertical-align: middle;
+}
+.contents{
+  text-align: center;
+  font-size: 2em;
+  border-radius: 30px;
 }
 .title::placeholder{
   text-align: center;
+  font-size: 0.8em;
 }
 .contents::placeholder{
   text-align: center;
   line-height: 290px;
-  font-size: 1.2em;
+  font-size: 0.8em;
 }
 
 .contents-box > .contents{
@@ -99,7 +114,7 @@ h1{
   display: block;
   resize: none;
 }
-.icons>img{
+.icons img{
   width: 50px;
   height: 50px;
   float: right;
@@ -117,9 +132,16 @@ h1{
   display: flex;
   justify-content: space-evenly;
 }
-button{
+.Btn{
   margin-left: 150px;
   border : 1px solid #333;
   border-radius: 30px;
+  box-shadow: 3px 3px 3px palevioletred;
+  transition-duration: 0.3s;
+}
+.Btn:active{
+  margin-left: 5px;
+  margin-top: 5px;
+  box-shadow: none;
 }
 </style>

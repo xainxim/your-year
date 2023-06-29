@@ -68,7 +68,7 @@ export default {
       this.axios.get("/api/web").then((res) => {
         this.DiaryList = res.data;
         this.DiaryLength = this.DiaryList.length;
-        console.log('date time::::'+this.createdDatetime);
+        console.log(this.DiaryList);
       });
     },
     getDiaryDetail(idx){
@@ -107,7 +107,9 @@ export default {
   width: 1300px;
   margin: 0 auto;
 }
-
+.title{
+  width: 300px;
+}
 h2 {
   text-align: center;
   margin: 40px 0 0 0;
@@ -149,6 +151,13 @@ color: #333;
 .page-btn{
   width: 70px;
   text-align: center;
+  box-shadow: 3px 3px 3px black;
+  transition-duration: 0.3s;
+}
+.page-btn:active{
+  margin-left: 5px;
+  margin-top: 5px;
+  box-shadow: none;
 }
 
 </style>

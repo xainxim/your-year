@@ -1,8 +1,8 @@
 <template>
     <div class="header">
-        <h1>YourYear</h1>
+        <h1>{{nickname}}'sYear</h1>
         <ul class="menu">
-            <li class="list"><router-link to="/home/:nickname">home</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;
+            <li class="list"><router-link to="/home">home</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;
             <li class="list">calendar</li>&emsp;&emsp;&emsp;&emsp;&emsp;
             <li class="list"><router-link to="/diary">your diary</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;
             <li class="list">bucket list</li>
@@ -14,22 +14,22 @@
 export default{
     data(){
         return{
-            // nickname : ''
+            nickname : ''
         };
     },
-    props:{
-        nickname: String
-    },
+    // props:{
+    //     nickname: String
+    // },
     methods: {
-        // selectName(){
-        //     this.axios.get("/api/web/"+this.nickname).then((res) => {
-        //         console.log(res.data);
-        //         this.nickname = res.data.nickname;
-        //     })
-        // }
+    selectName() {
+      this.axios.get("/api/web/nickname").then((res) => {
+        console.log(res.data);
+        this.nickname = res.data.nickName;
+      })
+    },
     },
     created(){
-        // this.selectName();
+        this.selectName();
     }
 }
 </script>
@@ -48,6 +48,7 @@ h1{
     text-align: center;
     font-weight: bold;
     color: palevioletred;
+    text-shadow: 7px 3px pink;
 }
 .header{
     width: 1300px;
@@ -59,7 +60,6 @@ h1{
     list-style: none;
     padding: 0;
     margin-left: 15%;
-    margin-top: 30px;
 }
 .list {
     margin-right: 10px;

@@ -30,9 +30,9 @@ export default {
         motto: this.motto
       }).then((res) => {
         if(res.status== '200'){
-          console.log(this.nickName);
+          // console.log(this.nickName);
           alert('등록 완료');
-          this.$router.push('/home/'+this.nickName);
+          this.$router.push('/home');
         }
         
       });

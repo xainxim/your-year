@@ -1,19 +1,15 @@
 <template>
-  <!-- <HeaderView/> -->
-  <!-- <MainView msg="YY"/> -->
+
   <router-view></router-view>
-  <!-- <MainView/> -->
+
 </template>
 
 <script>
-// import MainView from './components/MainView.vue'
-// import HeaderView from './components/HeaderView.vue'
 
 export default {
   name: 'App',
   components: {
-    // MainView
-    // HeaderView
+
   }
 }
 </script>
