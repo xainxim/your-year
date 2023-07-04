@@ -91,7 +91,7 @@ export default {
 
 section {
   width: 100%;
-  height: 400px;
+  height: 500px;
 }
 
 h2 {
@@ -140,7 +140,7 @@ h2 {
 .contents-box>.contents {
   margin: 0 auto;
   width: 1000px;
-  height: 300px;
+  height: 400px;
   display: block;
   resize: none;
 }

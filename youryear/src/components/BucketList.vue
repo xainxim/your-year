@@ -17,3 +17,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.bucket{
+    width: 1500px;
+    margin: 0 auto;
+}
+</style>
