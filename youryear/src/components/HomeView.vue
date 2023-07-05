@@ -14,9 +14,10 @@
         </div>
       </div>
     </div>
+    
     <div class="saying">
       <p>Today's saying</p>
-      {{ saying }}saying
+      {{ saying }}
     </div>
     <div class="contents">
       <div class="todo">
@@ -65,6 +66,9 @@ export default {
       nickname: '',
       weather_api_key: "f806317ffcb65c6eecd625838e41c2c3",
       weather_url_base: "http://api.openweathermap.org/data/2.5/",
+      saying_api_key: "guest",
+      saying_url_base: "https://api.qwer.pw/request/helpful_text",
+      saying: '',
       weather: {},
       code: '',
       temp: 0,
@@ -75,6 +79,15 @@ export default {
   },
   mounted() {
     let fetchUrl = `${this.weather_url_base}weather?q=Seoul&appid=${this.weather_api_key}`
+    let sayingUrl = `${this.saying_url_base}?apikey=guest`
+    fetch(sayingUrl)
+      .then(response => {
+        return response.json()
+      })
+      .then(result2 => {
+        this.result2 = result2
+        this.saying = result2[1].respond
+      })
     fetch(fetchUrl)
       .then(response => {
         return response.json()
@@ -98,18 +111,18 @@ export default {
       })
   },
   methods: {
-    getSaying() {
-      this.axios.get("https://api.adviceslip.com/advice").then((res) => {
-        this.saying = res.data.slip.advice;
-        console.log(this.saying);
-      })
-    },
+    // getSaying() {
+    //   this.axios.get("https://api.qwer.pw/request/helpful_text?apikey=guest").then((res) => {
+    //     this.saying = res.data.respond;
+    //     console.log(this.saying);
+    //   })
+    // },
     todo(){
 
     }
   },
   created() {
-    this.getSaying();
+    // this.getSaying();
   }
 }
 </script>
@@ -128,7 +141,7 @@ export default {
 }
 .weather-box {
   margin-top: 50px;
-  margin-left: 14%;
+  margin-left: 18%;
 }
 .location {
   width: 100px;
@@ -164,13 +177,13 @@ export default {
   font-weight: 700;
 }
 .saying{
-  margin-left: 55%;
+  margin-left: 50%;
   margin-top: -125px;
-  font-size: 2em;
+  font-size: 1.7em;
 }
 .saying p{
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.5em;
   border-bottom: 1px solid palevioletred;
   width:200px;
 }
@@ -185,19 +198,21 @@ export default {
 .memo, .memo>img{
   width: 520px;
   height: 500px;
+  position:relative;
 }
 .memo h1{
   position: absolute;
   top: 100px;
-  left: 70%;
-  font-size: 3em;
+  left: 40%;
+  font-weight: bold;
+  font-size: 40px;
 }
 .memoText{
   position: absolute;
   display: block;
   resize: none;
   top: 155px;
-  left: 59%;
+  left: 13%;
   width:390px;
   height: 290px;
   font-size: 2em;
@@ -219,7 +234,6 @@ export default {
   position: absolute;
   top: 125px;
   left: 40px;
-  font-size: 2em;
 }
 .todo ul li{
   border-bottom: 1px solid #333;
@@ -228,6 +242,8 @@ export default {
 .todo input{
   width: 350px;
   border: 0;
+  font-size: 32px;
+  
 }
 .todoBtn{
   margin-top: 10px;

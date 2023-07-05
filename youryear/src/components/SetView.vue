@@ -32,7 +32,7 @@ export default {
         if(res.status== '200'){
           // console.log(this.nickName);
           alert('등록 완료');
-          this.$router.push('/home');
+          this.$router.push('/diary');
         }
         
       });
