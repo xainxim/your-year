@@ -2,7 +2,7 @@
   <div class="setView">
 
     <div>
-      <h1></h1>
+      <h1>기본 설정</h1>
       <input type="text" class="set-input" placeholder="닉네임" v-model="nickName"><br><br><br>
 
       <input type="text" class="set-input" placeholder="당신의 좌우명은 ?" v-model="motto"><br><br><br>
@@ -25,6 +25,10 @@ export default {
   },
   methods: {
     insertSetting(){
+      if(this.nickName == "" || this.motto == ""){
+        alert('정보를 입력해주세요')
+        return;
+      }
       this.axios.post("/api/web/setting",{
         nickName : this.nickName,
         motto: this.motto
@@ -32,14 +36,11 @@ export default {
         if(res.status== '200'){
           // console.log(this.nickName);
           alert('등록 완료');
-          this.$router.push('/diary');
+          this.$router.push('/home');
         }
         
       });
     },
-    // setNickname(nickName){
-      
-    // }
   },
 }
 </script>

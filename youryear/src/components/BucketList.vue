@@ -1,7 +1,7 @@
 <template>
     <header-view></header-view>
     <div class="bucket">
-        bucketList
+      <h1> {{ motto }} </h1>
     </div>
 </template>
 
@@ -14,6 +14,24 @@ export default {
   },
   components: {
     HeaderView
+  },
+  data(){
+    return{
+      motto: ''
+    }
+  },
+  methods:{
+    selectMotto(){
+      this.axios.get("/api/web/motto").then((res) => {
+        
+        this.motto = res.data.motto;
+        console.log(this.motto)
+      })
+    }
+  },
+  created(){
+    this.selectMotto();
+
   }
 }
 </script>
@@ -22,5 +40,9 @@ export default {
 .bucket{
     width: 1500px;
     margin: 0 auto;
+}
+h1{
+  text-align: center;
+  margin-top: 50px;
 }
 </style>

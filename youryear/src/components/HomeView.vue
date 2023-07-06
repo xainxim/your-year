@@ -14,46 +14,39 @@
         </div>
       </div>
     </div>
-    
+
     <div class="saying">
       <p>Today's saying</p>
       {{ saying }}
     </div>
     <div class="contents">
+
       <div class="todo">
         <img src="../assets/images/todo.jpeg" alt="">
-        <h1>Today's List</h1>
-        <ul>
-          <li v-for="data in state.todoData" :key="data">
-            <input type="text" :value="data">
-          </li>
-          <button @click="add()" class="todoBtn">+</button>
-        </ul>
-        
+        <div class="todo-box">
+          <input type="text" v-model="todoList" placeholder="Today's List" class="todoInput">
+          <button @click.prevent="addTodo" class="addTodo">할일 추가</button>
+          
+
+          <div class="todo-list" v-for="item in tasks" :key="item">
+            <div class="todoList"> {{ item.todoList }} </div>
+          </div>
+        </div>
+        <button @click.prevent="deleteTodo" class="deleteTodo">초기화</button>
       </div>
+
       <div class="memo">
         <img src="../assets/images/memo.png" alt="">
         <h1>memoooo</h1>
         <textarea class="memoText"></textarea>
-    </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import HeaderView from './HeaderView.vue';
-import { reactive  } from 'vue';
 export default {
-  setup(){
-    const state = reactive({
-        todoData: ['data1','data2','data3'],
-      });
-
-      const add = () => {
-        state.todoData.push("추가 data");
-      }
-      return { state, add };
-  },
   name: 'HomeView',
   props: {
     msg: String
@@ -63,6 +56,8 @@ export default {
   },
   data() {
     return {
+      tasks: '',
+      todoList: '',
       nickname: '',
       weather_api_key: "f806317ffcb65c6eecd625838e41c2c3",
       weather_url_base: "http://api.openweathermap.org/data/2.5/",
@@ -99,30 +94,46 @@ export default {
         this.temp = (result.main.temp - 273.15).toFixed(1) // 기온
         this.iconCode = result.weather[0].icon.toString()
 
-        if(this.weather == "Clouds") this.weatherText= '구름'
-        if(this.weather == "Rain") this.weatherText= "비"
-        if(this.weather == "Mist") this.weatherText= "안개"
-        if(this.weather == "Snow") this.weatherText= "눈"
-        if(this.weather == 'Thunderstorm') this.weatherText= "천둥"
+        if (this.weather == "Clouds") this.weatherText = '구름'
+        if (this.weather == "Rain") this.weatherText = "비"
+        if (this.weather == "Drizzle") this.weatherText = "이슬비"
+        if (this.weather == "Mist") this.weatherText = "안개"
+        if (this.weather == "Snow") this.weatherText = "눈"
+        if (this.weather == 'Thunderstorm') this.weatherText = "천둥"
+        if (this.weather == 'Clear') this.weatherText = "맑음"
+        if (this.weather == 'Dust') this.weatherText = "먼지"
 
         const weatherTmp = document.createElement("img")  // 날씨 이미지
         weatherTmp.src = require(`../assets/images/${this.iconCode}.png`)
         document.getElementById("weatherIcon").appendChild(weatherTmp)
       })
+      this.selectTodo();
   },
   methods: {
-    // getSaying() {
-    //   this.axios.get("https://api.qwer.pw/request/helpful_text?apikey=guest").then((res) => {
-    //     this.saying = res.data.respond;
-    //     console.log(this.saying);
-    //   })
-    // },
-    todo(){
-
+    addTodo() {
+      if (this.todoList == "") {
+        alert('내용을 입력해주세요')
+        return;
+      }
+      this.axios.post("/api/web/todoList", {
+        todoList: this.todoList
+      }).then((res) => {
+        if (res.status == '200') {
+          console.log(this.todo)
+          // this.tasks.push({ words: this.todoList });
+          this.todoList = "";
+          this.selectTodo()
+        }
+      })
+    },
+    selectTodo() {
+      this.axios.get('/api/web/selectTodo').then((res) => {
+        this.tasks = res.data;
+        console.log(this.tasks);
+      })
     }
   },
   created() {
-    // this.getSaying();
   }
 }
 </script>
@@ -135,14 +146,17 @@ export default {
   box-sizing: border-box;
   color: #333;
 }
+
 .homeView {
   width: 1700px;
   margin: 0 auto;
 }
+
 .weather-box {
   margin-top: 50px;
   margin-left: 18%;
 }
+
 .location {
   width: 100px;
   height: 50px;
@@ -151,6 +165,7 @@ export default {
   font-weight: 500;
   text-shadow: 1px 3px rgba(0, 0, 0, 0.25);
 }
+
 .weather-box .temp {
   text-align: center;
   display: inline-block;
@@ -163,89 +178,139 @@ export default {
   border-radius: 20px;
   box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
 }
+
 .weather-box {
   width: 470px;
   display: flex;
   justify-content: space-between
 }
-#weatherIcon{
+
+#weatherIcon {
   width: 120px;
 }
+
 .weather-box .weather {
   color: palevioletred;
   font-size: 40px;
   font-weight: 700;
 }
-.saying{
+
+.saying {
   margin-left: 50%;
   margin-top: -125px;
   font-size: 1.7em;
 }
-.saying p{
+
+.saying p {
   font-weight: bold;
   font-size: 1.5em;
   border-bottom: 1px solid palevioletred;
-  width:200px;
+  width: 200px;
 }
-.contents{
-  width:1300px;
+
+.contents {
+  width: 1300px;
   margin: 0 auto;
   margin-top: 30px;
   position: relative;
   display: flex;
   justify-content: space-evenly;
 }
-.memo, .memo>img{
+
+.todo-box {
+  position: absolute;
+  top: 80px;
+  left: 10%;
+}
+.addTodo{
+  width: 120px;
+  height: 50px;
+  font-size: 30px;
+}
+.todoInput{
+  width: 100px;
+}
+.todo-list{
+  margin-top: 20px;
+}
+.todoList {
+  text-align: left;
+  width: 430px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 30px;
+  border-bottom: 1px solid #333;
+}
+
+.deleteTodo{
+  position: absolute;
+  margin-top: 420px;
+  left: 80%;
+  width: 80px;
+  height: 30px;
+  font-size: 20px;
+}
+
+.memo, .memo>img {
   width: 520px;
   height: 500px;
-  position:relative;
+  position: relative;
 }
-.memo h1{
+
+.memo h1 {
   position: absolute;
   top: 100px;
   left: 40%;
   font-weight: bold;
   font-size: 40px;
 }
-.memoText{
+
+.memoText {
   position: absolute;
   display: block;
   resize: none;
   top: 155px;
   left: 13%;
-  width:390px;
+  width: 390px;
   height: 290px;
   font-size: 2em;
   border: 0;
 }
-.todo, .todo>img{
+
+.todo,
+.todo>img {
   margin-top: 20px;
   width: 550px;
   height: 450px;
   position: relative;
 }
-.todo h1{
+
+.todo h1 {
   position: absolute;
   top: 80px;
   left: 35%;
   font-weight: bold;
 }
-.todo ul{
+
+.todo ul {
   position: absolute;
   top: 125px;
   left: 40px;
 }
-.todo ul li{
+
+.todo ul li {
   border-bottom: 1px solid #333;
   width: 400px;
 }
-.todo input{
+
+.todo input {
   width: 350px;
   border: 0;
   font-size: 32px;
-  
+
 }
-.todoBtn{
+
+.todoBtn {
   margin-top: 10px;
   width: 40px;
   height: 40px;
