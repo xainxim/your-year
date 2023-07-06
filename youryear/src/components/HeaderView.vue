@@ -2,9 +2,9 @@
     <div class="header">
         <h1>{{nickname}}'sYear</h1>
         <ul class="menu">
-            <li class="list"><router-link to="/home">home</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;
-            <li class="list">calendar</li>&emsp;&emsp;&emsp;&emsp;&emsp;
-            <li class="list"><router-link to="/diary">your diary</router-link></li>&emsp;&emsp;&emsp;&emsp;&emsp;
+            <li class="list"><router-link to="/home">home</router-link></li>
+            <li class="list">calendar</li>
+            <li class="list"><router-link to="/diary">your diary</router-link></li>
             <li class="list"><router-link to="/bucket">bucket list</router-link></li>
         </ul>
       </div>
@@ -56,10 +56,9 @@ h1{
 }
 
 .menu {
-    font-size: 2em;
-    list-style: none;
-    padding: 0;
-    margin-left: 17%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 35px;
 }
 .list {
     margin-right: 10px;

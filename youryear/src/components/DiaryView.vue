@@ -6,7 +6,9 @@
     <section>
       <div class="diary-box">
         <div v-for="item in paginatedData" :key="item">
-          <!-- <div class="idx">{{ item.idx }}</div> -->
+          <div class="myfeeling"><img :src="item.path"></div> 
+          
+                   
           <div class="title" v-on:click="getDiaryDetail(item.idx)" style="cursor:pointer">{{ item.title }}</div>
           <div class="date">{{ item.createdDatetime }}</div>
         </div>
@@ -48,8 +50,17 @@ export default {
       pageNum : 0,
       DiaryList: [
         { idx: '' },
+        { myfeeling: ''},
         { title: '' },
-        { createdDatetime: '' }
+        { createdDatetime: '' },
+        { path : ''}
+      ],
+      imgPath : [
+        {path : require("../assets/images/happy.png")},
+        {path : require("../assets/images/sad.png")},
+        {path : require("../assets/images/angry.png")},
+        {path : require("../assets/images/love.png")},
+        {path : require("../assets/images/nothing.png")},
       ],
       DiaryLength : 0,
     };
@@ -61,14 +72,20 @@ export default {
     prevPage(){
       this.pageNum -= 1;
     },
-
-
-
+    
     selectDiaryList() {
       this.axios.get("/api/web").then((res) => {
         this.DiaryList = res.data;
         this.DiaryLength = this.DiaryList.length;
-        console.log(this.DiaryList);
+        for(var i =0;i<this.DiaryLength;i++){
+          switch (this.DiaryList[i].myfeeling) {
+            case 'happy': this.DiaryList[i].path = this.imgPath[0].path; break;
+            case 'sad': this.DiaryList[i].path = this.imgPath[1].path; break;
+            case 'angry': this.DiaryList[i].path = this.imgPath[2].path; break;
+            case 'love': this.DiaryList[i].path = this.imgPath[3].path; break;
+            case 'nothing': this.DiaryList[i].path = this.imgPath[4].path; break;
+          }
+        }
       });
     },
     getDiaryDetail(idx){
@@ -142,6 +159,11 @@ color: #333;
   float: right;
   margin-right: 145px;
   cursor: pointer;
+}
+.myfeeling > img{
+  width: 90px;
+  margin-bottom: 40px;
+  padding-right: 30px;
 }
 .btn-cover{
   width: 250px;

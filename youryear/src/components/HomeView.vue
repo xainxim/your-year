@@ -26,10 +26,11 @@
         <div class="todo-box">
           <input type="text" v-model="todoList" placeholder="Today's List" class="todoInput">
           <button @click.prevent="addTodo" class="addTodo">할일 추가</button>
-          
 
+          
           <div class="todo-list" v-for="item in tasks" :key="item">
-            <div class="todoList"> {{ item.todoList }} </div>
+            <input id="checkboxCss" type="checkbox" :checked="item.done == 'true'" @change="checkBox(item)">
+            <div class="todoList" :style="item.done == 'true'? 'text-decoration:line-through':''"> {{ item.todoList }} </div>
           </div>
         </div>
         <button @click.prevent="deleteTodo" class="deleteTodo">초기화</button>
@@ -57,6 +58,7 @@ export default {
   data() {
     return {
       tasks: '',
+      done: '',
       todoList: '',
       nickname: '',
       weather_api_key: "f806317ffcb65c6eecd625838e41c2c3",
@@ -72,7 +74,7 @@ export default {
       weatherText: ''
     };
   },
-  mounted() {
+  mounted() {  // 화면에 처음 보여지는
     let fetchUrl = `${this.weather_url_base}weather?q=Seoul&appid=${this.weather_api_key}`
     let sayingUrl = `${this.saying_url_base}?apikey=guest`
     fetch(sayingUrl)
@@ -107,7 +109,7 @@ export default {
         weatherTmp.src = require(`../assets/images/${this.iconCode}.png`)
         document.getElementById("weatherIcon").appendChild(weatherTmp)
       })
-      this.selectTodo();
+    this.selectTodo();
   },
   methods: {
     addTodo() {
@@ -115,8 +117,10 @@ export default {
         alert('내용을 입력해주세요')
         return;
       }
+      console.log(this.todoList)
+      console.log(this.done)
       this.axios.post("/api/web/todoList", {
-        todoList: this.todoList
+        todoList: this.todoList 
       }).then((res) => {
         if (res.status == '200') {
           console.log(this.todo)
@@ -129,11 +133,33 @@ export default {
     selectTodo() {
       this.axios.get('/api/web/selectTodo').then((res) => {
         this.tasks = res.data;
-        console.log(this.tasks);
+        this.done = res.data;
+        console.log(this.done);
       })
-    }
+    },
+    checkBox(param){
+      if(param.done == 'true'){
+        param.done = 'false'
+      }else{
+        param.done = 'true'
+      }
+
+      this.axios.put('/api/web/updateTodoDone',param).then((res) =>{
+        if (res.status == '200') {
+          console.log(this.done)
+        }
+      })
+    },
+    deleteTodo(){
+      this.axios.delete('/api/web/deleteTodoList').then((res) =>{
+        if (res.status == '200'){
+          this.selectTodo()
+        }
+      })
   },
   created() {
+    
+  }
   }
 }
 </script>
@@ -222,27 +248,30 @@ export default {
   top: 80px;
   left: 10%;
 }
-.addTodo{
+
+.addTodo {
   width: 120px;
   height: 50px;
   font-size: 30px;
 }
-.todoInput{
+
+.todoInput {
   width: 100px;
 }
-.todo-list{
+
+.todo-list {
   margin-top: 20px;
 }
+
 .todoList {
   text-align: left;
   width: 430px;
   height: 30px;
   line-height: 30px;
   font-size: 30px;
-  border-bottom: 1px solid #333;
 }
 
-.deleteTodo{
+.deleteTodo {
   position: absolute;
   margin-top: 420px;
   left: 80%;
@@ -251,7 +280,8 @@ export default {
   font-size: 20px;
 }
 
-.memo, .memo>img {
+.memo,
+.memo>img {
   width: 520px;
   height: 500px;
   position: relative;
@@ -316,4 +346,14 @@ export default {
   height: 40px;
   border-radius: 30px;
 }
+input[type="checkbox"]{
+  float: left;
+  margin-right: 30px;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border:3px solid #707070;
+  cursor: pointer;
+}
+
 </style>

@@ -7,11 +7,11 @@
             <input type="text" class="title" placeholder="제목을 입력해주세요" v-model="title">
             <div class="icons">
               <p>오늘 기분은</p>
-              <img src="../assets/images/happy.png" alt="" @click="clickImg" class="imgIcon">
-              <img src="../assets/images/sad.png" alt="">
-              <img src="../assets/images/angry.png" alt="">
-              <img src="../assets/images/love.png" alt="">
-              <img src="../assets/images/nothing.png" alt="">
+              <a href="#"><img src="../assets/images/happy.png"  @click="clickImg('happy')"></a>
+              <img src="../assets/images/sad.png" @click="clickImg('sad')">
+              <img src="../assets/images/angry.png" @click="clickImg('angry')">
+              <img src="../assets/images/love.png" @click="clickImg('love')">
+              <img src="../assets/images/nothing.png" @click="clickImg('nothing')">
             </div>
           </div>
           <div class="contents-box">
@@ -35,8 +35,9 @@ export default {
   data(){
     return{
       title : '',
-      contents : ''
-    }
+      contents : '',
+      myfeeling : ''
+    } 
   },
   methods:{
     saveDATA(){
@@ -46,7 +47,8 @@ export default {
       }
       this.axios.post("/api/web/diaryInsert",{
         title : this.title,
-        contents : this.contents
+        contents : this.contents,
+        myfeeling : this.myfeeling
       }).then((res) => {
         if(res.status=='200'){
           alert('등록 완료');
@@ -54,8 +56,9 @@ export default {
         }
       })
     },
-    clickImg(){
-      
+    clickImg(text){
+        this.myfeeling = text
+        console.log(text)
     }
   }
 }
