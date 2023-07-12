@@ -1,10 +1,8 @@
 
 <template>
-  <HeaderView></HeaderView>
-
   <div class="homeView">
-    <!-- {{ nickname }} -->
-
+    <HeaderView></HeaderView>
+    
     <div name="weather-box">
       <div class="weather-box">
         <div id="weatherIcon"></div>
@@ -43,6 +41,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -347,7 +346,6 @@ export default {
   border-radius: 30px;
 }
 input[type="checkbox"]{
-  float: left;
   margin-right: 30px;
   display: inline-block;
   width: 30px;

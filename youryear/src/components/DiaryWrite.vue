@@ -1,17 +1,17 @@
 <template>
-    <HeaderView></HeaderView>
     <div class="write">
+      <HeaderView></HeaderView>
         <h2>오늘 하루는 어땠나요 ?</h2>
         <section>
           <div class="title-box">
             <input type="text" class="title" placeholder="제목을 입력해주세요" v-model="title">
             <div class="icons">
               <p>오늘 기분은</p>
-              <a href="#"><img src="../assets/images/happy.png"  @click="clickImg('happy')"></a>
-              <img src="../assets/images/sad.png" @click="clickImg('sad')">
-              <img src="../assets/images/angry.png" @click="clickImg('angry')">
-              <img src="../assets/images/love.png" @click="clickImg('love')">
-              <img src="../assets/images/nothing.png" @click="clickImg('nothing')">
+              <a href="#" class="feelingIcon"><img src="../assets/images/happy.png"  @click="clickImg('happy')"></a>
+              <a href="#" class="feelingIcon"><img src="../assets/images/sad.png" @click="clickImg('sad')"></a>
+              <a href="#" class="feelingIcon"><img src="../assets/images/angry.png" @click="clickImg('angry')"></a>
+              <a href="#" class="feelingIcon"><img src="../assets/images/love.png" @click="clickImg('love')"></a>
+              <a href="#" class="feelingIcon"><img src="../assets/images/nothing.png" @click="clickImg('nothing')"></a>
             </div>
           </div>
           <div class="contents-box">
@@ -43,6 +43,10 @@ export default {
     saveDATA(){
       if(this.title == "" || this.contents == ""){
         alert('제목과 내용을 입력해주세요');
+        return;
+      }
+      if(this.myfeeling == ""){
+        alert('오늘의 기분을 선택해주세요');
         return;
       }
       this.axios.post("/api/web/diaryInsert",{
@@ -114,13 +118,15 @@ h2{
   display: block;
   resize: none;
 }
-.icons img{
-  width: 50px;
-  height: 50px;
+.icons a img{
+  width: 55px;
+  height: 55px;
   float: right;
+}
+.feelingIcon{
   opacity: 0.3;
 }
-.icons>img:hover{
+.feelingIcon:active{
   opacity: 1;
 }
 .icons > p{
@@ -132,6 +138,7 @@ h2{
   display: flex;
   justify-content: space-evenly;
 }
+
 .Btn{
   margin-left: 150px;
   border : 1px solid #333;

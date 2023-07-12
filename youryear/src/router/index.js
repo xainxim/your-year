@@ -41,6 +41,11 @@ const routes = [
         path: "/bucket",
         name: "bucket",
         component: () => import("../components/BucketList.vue"),
+    },
+    {
+        path: "/calendar",
+        name: "calendar",
+        component: () => import("../components/CalendarView.vue"),
     }
 ];
 

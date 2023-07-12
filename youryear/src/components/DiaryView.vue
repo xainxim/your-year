@@ -1,6 +1,6 @@
 <template>
-  <HeaderView></HeaderView>
   <div class="diaryView">
+    <HeaderView></HeaderView>
     <h2>일긔</h2>
 
     <section>
@@ -121,7 +121,7 @@ export default {
   padding: 0;
 }
 .diaryView {
-  width: 1300px;
+  width: 1500px;
   margin: 0 auto;
 }
 .title{

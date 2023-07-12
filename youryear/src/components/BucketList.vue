@@ -1,6 +1,6 @@
 <template>
-    <header-view></header-view>
     <div class="bucket">
+      <header-view></header-view>
       <h1> {{ motto }} </h1>
     </div>
 </template>

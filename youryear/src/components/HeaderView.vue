@@ -3,7 +3,7 @@
         <h1>{{nickname}}'sYear</h1>
         <ul class="menu">
             <li class="list"><router-link to="/home">home</router-link></li>
-            <li class="list">calendar</li>
+            <li class="list"><router-link to="/calendar">calendar</router-link></li>
             <li class="list"><router-link to="/diary">your diary</router-link></li>
             <li class="list"><router-link to="/bucket">bucket list</router-link></li>
         </ul>
@@ -51,14 +51,14 @@ h1{
     text-shadow: 7px 3px pink;
 }
 .header{
-    width: 1300px;
+    width: 1500px;
     margin: 0 auto;
 }
 
 .menu {
     display: flex;
     justify-content: space-between;
-    font-size: 35px;
+    font-size: 40px;
 }
 .list {
     margin-right: 10px;

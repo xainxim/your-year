@@ -1,6 +1,6 @@
 <template>
-  <HeaderView></HeaderView>
   <div class="detail">
+    <HeaderView></HeaderView>
     <h2>{{ createdDatetime }}</h2>
     <section>
       <div class="title-box">
