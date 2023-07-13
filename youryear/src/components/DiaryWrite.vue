@@ -70,17 +70,18 @@ export default {
 
 <style>
 .write{
-    width: 1300px;
+    width: 1500px;
     margin: 0 auto;
 }
 section{
   width: 100%;
-  height: 500px;
+  height: 600px;
 }
 h2{
   text-align: center;
   margin-top: 70px;
   font-weight: bold;
+  font-size: 2.5em;
 }
 .title-box{
   display: flex;

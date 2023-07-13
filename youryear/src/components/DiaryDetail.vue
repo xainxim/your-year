@@ -85,7 +85,7 @@ export default {
 
 <style>
 .detail {
-  width: 1300px;
+  width: 1500px;
   margin: 0 auto;
 }
 
@@ -98,6 +98,7 @@ h2 {
   text-align: center;
   margin-top: 70px;
   font-weight: bold;
+  font-size: 3em;
 }
 
 .title-box {

@@ -1,7 +1,7 @@
 <template>
   <div class="diaryView">
     <HeaderView></HeaderView>
-    <h2>일긔</h2>
+    <h2>diary</h2>
 
     <section>
       <div class="diary-box">
@@ -38,7 +38,7 @@ export default {
     pageSize : {
       type : Number,
       required : false,
-      default : 5
+      default : 7
     }
   },
   components: {
@@ -129,16 +129,19 @@ export default {
 }
 h2 {
   text-align: center;
-  margin: 40px 0 0 0;
+  margin: 60px 0 0 0;
   font-weight: bold;
   font-size: 2.5em;
 }
 section{
   width: 100%;
-  height: 500px;
+  height: 580px;
+}
+.diary-box{
+  margin-top: 20px;
 }
 .diary-box >div {
-  width: 1000px;
+  width: 1300px;
   height: 70px;
   border-bottom : 1px dotted #333;
   margin: 0 auto;
@@ -166,7 +169,7 @@ color: #333;
   padding-right: 30px;
 }
 .btn-cover{
-  width: 250px;
+  width: 300px;
   margin: 0 auto;
   margin-top: 10px;
 }

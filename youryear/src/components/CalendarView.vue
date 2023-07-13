@@ -1,5 +1,6 @@
 <template>
     <section class="calendar">
+        <calenWrite ref="calen" />
         <header-view></header-view>
         <div class="container">
             <h2 class="main-box">
@@ -17,7 +18,8 @@
                             'last-dates': idx === 0 && day >= lastMonthStart,
                             'next-dates': dates.length - 1 === idx && nextMonthStart > day,
                             'today': day === today && month === currentMonth && year === currentYear
-                        }" @click="showModal">
+                        }" @click="showModal(year,month,day)">
+
                             {{ day }}
                         </td>
                     </tr>
@@ -28,9 +30,10 @@
 </template>
   
 <script>
+import calenWrite from './CalenWrite.vue';
 import HeaderView from './HeaderView.vue';
 export default {
-    components: { HeaderView },
+    components: { HeaderView, calenWrite },
     data() {
         return {
             days: ['일','월','화','수','목','금','토',],
@@ -54,8 +57,8 @@ export default {
         this.calendarData();
     },
     methods: {
-        showModal: function(){
-            alert('Hello');
+        showModal: function(year,month,day){
+            this.$refs.calen.popup(year,month,day);
         },
         calendarData(arg) { // 인자 추가
             if (arg < 0) { // -1 = 지난 달 이동
@@ -104,7 +107,7 @@ export default {
             let weekOfDays = [];
             while (day <= monthLastDate) {
                 if (day === 1) {
-                    // 1일이 어느 요일인지에 따라 테이블에 그리기 위한 지난 셀의 날짜들을 구할 필요가 있다.
+                    // 1일이 어느 요일인지에 따라 테이블에 그리기 위한 지난 셀의 날짜들을 구함
                     for (let j = 0; j < monthFirstDay; j += 1) {
                         if (j === 0) this.lastMonthStart = prevDay; // 지난 달에서 제일 작은 날짜
                         weekOfDays.push(prevDay);
@@ -140,7 +143,6 @@ export default {
 }
 .container{
     width: 1500px;
-    margin-top: 50px;
 }
 .main-box{
     margin-bottom: 30px;
