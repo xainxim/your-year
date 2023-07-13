@@ -1,8 +1,9 @@
 <template>
     <section class="calendar">
-        <calenWrite ref="calen" />
+        <!-- <calenWrite ref="calen" /> -->
         <header-view></header-view>
         <div class="container">
+            <div>  </div>
             <h2 class="main-box">
                 <button class="changeDate" @click="calendarData(-1)">&lt;</button>
                 {{ year }}년 {{ month }}월
@@ -18,7 +19,7 @@
                             'last-dates': idx === 0 && day >= lastMonthStart,
                             'next-dates': dates.length - 1 === idx && nextMonthStart > day,
                             'today': day === today && month === currentMonth && year === currentYear
-                        }" @click="showModal(year,month,day)">
+                        }" @click="changePopState()" >
 
                             {{ day }}
                         </td>
@@ -26,16 +27,19 @@
                 </tbody>
             </table>
         </div>
+        <PopUp v-if="popState" @close="changePopState()" v-bind:modalData="this.modalData"></PopUp>
     </section>
+
 </template>
   
 <script>
-import calenWrite from './CalenWrite.vue';
+import PopUp from './PopUp.vue';
 import HeaderView from './HeaderView.vue';
 export default {
-    components: { HeaderView, calenWrite },
+    components: { HeaderView, PopUp},
     data() {
         return {
+            popState : false,
             days: ['일','월','화','수','목','금','토',],
             dates: [],
             currentYear: 0,
@@ -57,9 +61,10 @@ export default {
         this.calendarData();
     },
     methods: {
-        showModal: function(year,month,day){
-            this.$refs.calen.popup(year,month,day);
+        changePopState(){
+            this.popState = !this.popState;  //팝업창 열고 닫기
         },
+
         calendarData(arg) { // 인자 추가
             if (arg < 0) { // -1 = 지난 달 이동
                 this.month -= 1;
@@ -137,6 +142,16 @@ export default {
 </script>
 
 <style scoped>
+.popup-view{
+    opacity: 0;
+    display: none;
+    visibility: hidden;
+  }
+  .active{
+    opacity: 1;
+    display: block;
+    visibility: visible;
+  }
 .calendar{
     width: 1700px;
     margin: 0 auto;
