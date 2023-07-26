@@ -180,7 +180,9 @@ export default {
 }
 .last-dates,.next-dates{
     color: lightgrey;
+    pointer-events: none;
 }
+
 .today{
     color: palevioletred;
     font-weight: bold;
