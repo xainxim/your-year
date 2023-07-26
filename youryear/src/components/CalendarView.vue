@@ -18,8 +18,8 @@
                         <td v-for="(day, secondIdx) in date" :key="secondIdx" :class="{
                             'last-dates': idx === 0 && day >= lastMonthStart,
                             'next-dates': dates.length - 1 === idx && nextMonthStart > day,
-                            'today': day === today && month === currentMonth && year === currentYear
-                        }" @click="changePopState()" >
+                            'today': day === today && month === currentMonth && year === currentYear && idx != 0
+                        }" @click="changePopState(year,month,day)" style="cursor:pointer">
 
                             {{ day }}
                         </td>
@@ -27,7 +27,7 @@
                 </tbody>
             </table>
         </div>
-        <PopUp v-if="popState" @close="changePopState()" v-bind:modalData="this.modalData"></PopUp>
+        <PopUp v-if="popState" @close="changePopState()" v-bind:modalData="dateData"></PopUp>
     </section>
 
 </template>
@@ -49,6 +49,7 @@ export default {
             lastMonthStart: 0,
             nextMonthStart: 0,
             today: 0,
+            dateData : []
         };
     },
     created() {
@@ -61,8 +62,9 @@ export default {
         this.calendarData();
     },
     methods: {
-        changePopState(){
+        changePopState(year,month,day){
             this.popState = !this.popState;  //팝업창 열고 닫기
+            this.dateData = [year,month,day];
         },
 
         calendarData(arg) { // 인자 추가

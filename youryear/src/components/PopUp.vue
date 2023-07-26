@@ -1,6 +1,8 @@
 <template>
     <div class="popup">
-      <h2>팝업창</h2>
+      <h1>{{modalData[0]}}년 {{modalData[1]}}월 {{modalData[2]}}일</h1>
+      
+      
       <button @click="closePopUp()" class="closePopUp">닫기</button>
 
     </div>
@@ -14,6 +16,9 @@ export default{
         return{
 
         }
+    },
+    created(){
+
     },
     methods:{
     closePopUp(){
@@ -34,6 +39,10 @@ export default{
     top: 50%;
     transform: translate(-50%,-50%);
     z-index: 999;
+}
+h1{
+    text-align: center;
+    margin-top: 20px;
 }
 .closePopUp{
     position: fixed;
